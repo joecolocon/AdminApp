@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { ComponentModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 
 import { PAGES_ROUTES } from './pages.routes';
 
@@ -18,6 +19,7 @@ import { PagesComponent } from './pages.component';
     imports: [
         CommonModule,
         FormsModule,
+        ChartsModule,
         SharedModule,
         ComponentModule,
         PAGES_ROUTES
