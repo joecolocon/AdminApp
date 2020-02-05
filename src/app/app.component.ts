@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SettingsService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AdminPro';
+
+  constructor( private settings: SettingsService ) {
+    this.settings.cargarAjustes();
+    this.settings.aplicarTema(this.settings.ajustes.tema);
+  }
 }

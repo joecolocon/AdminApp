@@ -13,4 +13,4 @@ const routes: Routes = [
   { path: '**', component: NopagefoundComponent }
 ];
 
-export const APP_ROUTES = RouterModule.forRoot(routes, { useHash: true, enableTracing: true });
+export const APP_ROUTES = RouterModule.forRoot(routes, { useHash: true, enableTracing: false });

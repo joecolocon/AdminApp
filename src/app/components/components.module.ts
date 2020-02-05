@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule } from 'ng2-charts';
 
-import { IncrementadorComponent } from './incrementador/incrementador.component';
-import { CommonModule } from '@angular/common';
-import { GraficoDonaComponent } from './grafico-dona/grafico-dona.component';
+import { IncrementadorComponent, GraficoDonaComponent } from './';
+
 
 @NgModule({
     imports: [
