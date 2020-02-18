@@ -9,11 +9,13 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 
-import { SidebarService } from '../services'
+import { SidebarService, LoginGuard } from '../services'
+
 const pageRoutes: Routes = [
   {
     path: '',
     component: PagesComponent,
+    canActivate: [ LoginGuard ], 
     children: [
       { path: 'dashboard', component: DashboardComponent, data: { titulo: 'TABLERO' } },
       { path: 'graficas1', component: Graficas1Component, data: { titulo: 'GRAFICAS' } },

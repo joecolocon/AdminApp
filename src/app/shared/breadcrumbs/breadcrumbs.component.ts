@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivationEnd, ActivatedRoute } from '@angular/router';
+import { Router, ActivationEnd, ActivatedRoute, Data } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Title, Meta, MetaDefinition } from '@angular/platform-browser';
@@ -32,7 +32,7 @@ export class BreadcrumbsComponent implements OnInit {
   ngOnInit() {
   }
 
-  getDataRoute(): Observable {
+  getDataRoute(): Observable<Data> {
     return this.router.events.pipe(
       filter(e => e instanceof ActivationEnd),
       filter((activated: ActivationEnd) => activated.snapshot.firstChild == null),
