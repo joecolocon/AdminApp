@@ -4,7 +4,7 @@ import { Usuario } from '../models/usuario.model';
 import { environment } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +26,13 @@ export class UsuarioService {
   crearUsuario( usuario: Usuario) {
     return this.client.post( environment.urlServicios+'/usuarios', usuario).pipe(
       map( (resp: any) =>  {
-         swal('Usuario creado', usuario.email, 'success' );
+         swal.fire('Usuario creado', usuario.email, 'success' );
          return resp.body;
       } ),
       catchError((err:any) => {
 
         if (err.error && err.error.errors && err.error.message) {
-           swal('Usuario no creado', err.error.errors.message, 'warning' );
+           swal.fire('Usuario no creado', err.error.errors.message, 'warning' );
         }
 
         return throwError(err);

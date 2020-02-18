@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../services/index'
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { Usuario } from '../models/usuario.model';
 
 @Component({
@@ -36,13 +36,15 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  registrarUsuario() {
+  async registrarUsuario() {
 
     if (this.formulario.invalid) return;
 
     if (!this.formulario.value.condiciones) {
-      swal('Importante', 'Debe aceptar las condiciones', 'warning');
+      await swal.fire('Importante', 'Debe aceptar las condiciones', 'warning');
+      return;
     }
+
     console.log("value", this.formulario.value);
 
     let usuario: Usuario = {
