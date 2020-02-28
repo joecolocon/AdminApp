@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 export class ImagenPipe implements PipeTransform {
 
   transform(imagen: string, tipo: string = 'usuario'): any {
-    console.log("Imagen Pipe ", imagen , tipo);
     if (tipo === 'usuario' && imagen && imagen.indexOf("http")==0) {
         return imagen;
     } else {

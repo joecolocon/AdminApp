@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
     console.log("modificarImagen", this.img);
 
     //Call to promise
-    this._usuarioService.actualizarImagen(this.img).then( resp => {
+    this._usuarioService.actualizarImagen(this.img).then( (resp:any) => {
       //Limpiar datos de formulario
       this.img = null;
       this.previewImg = null;

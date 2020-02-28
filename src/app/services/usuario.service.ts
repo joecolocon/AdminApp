@@ -20,6 +20,36 @@ export class UsuarioService {
     this.cargaStorage();
   }
 
+
+  cargarUsuarios(desde: number = 0) {
+
+    return this.client.get(environment.urlServicios + '/usuarios?desde='+desde).pipe(
+      map((resp:any) => {
+        return resp;
+      }) 
+    );
+    
+  }
+
+  buscarUsuarios(word: string) {
+    return this.client.get(environment.urlServicios + '/busqueda/coleccion/usuarios/'+word).pipe(
+      map((resp:any) => {
+        return resp;
+      }) 
+    );
+  }
+
+  borrarUsuario(usuario: Usuario) {
+
+    return this.client.delete(environment.urlServicios + '/usuarios/' + usuario._id, { headers: { "Authorization": this.token } }).pipe(
+      map((resp:any) => {
+        swal.fire('borrar usuario','usuario borrado correctamente','success');
+        return resp;
+      })  
+    );
+
+  }
+
   /**
    * Retorna un observable de la respuesta a la petición.
    * @param usuario 
@@ -29,42 +59,56 @@ export class UsuarioService {
       map((resp: any) => {
         swal.fire('Usuario creado', usuario.email, 'success');
         return resp.body;
-      }),
-      catchError((err: any) => {
-
-        if (err.error && err.error.errors && err.error.message) {
-          swal.fire('Usuario no creado', err.error.errors.message, 'warning');
-        }
-
-        return throwError(err);
       })
+      // ,
+      // catchError((err: any) => {
+
+      //   if (err.error && err.error.errors && err.error.message) {
+      //     swal.fire('Usuario no creado', err.error.errors.message, 'warning');
+      //   }
+
+      //   return throwError(err);
+      // })
     );
   }
 
-  modificarUsuario(usuario: Usuario) {
+  modificarUsuario(usuarioToEdit: Usuario) {
 
-    this.usuario.nombre = usuario.nombre;
-    this.usuario.email = usuario.email;
+    //Ignorar cualquier cambio de email del usuario loginado
+    if (this.usuario._id === usuarioToEdit._id) {
+      usuarioToEdit.email = this.usuario.email;  
+    }
 
-    return this.client.put(environment.urlServicios + '/usuarios/' + this.usuario._id, this.usuario, { headers: { "Authorization": this.token } }).pipe(
+
+    return this.client.put(environment.urlServicios + '/usuarios/' + usuarioToEdit._id, usuarioToEdit, { headers: { "Authorization": this.token } }).pipe(
       tap((resp: any) => {
         if (resp && resp.ok) {
-          this.guardaStorage(this.token, resp.usuario);
-          swal.fire('Usuario modificado', usuario.nombre, 'success');
-        }
-      }),
-      catchError((err: any) => {
 
-        if (err.error && err.error.errors && err.error.message) {
-          swal.fire('Usuario no modificado', err.error.errors.message, 'warning');
-        }
+          if (this.usuario._id === resp.usuario._id) {
+            this.guardaStorage(this.token, resp.usuario);
+          }
 
-        return throwError(err);
+          swal.fire('Usuario modificado', usuarioToEdit.nombre, 'success');
+        }
       })
+      // ,
+      // catchError((err: any) => {
+
+      //   if (err.error && err.error.errors && err.error.message) {
+      //     swal.fire('Usuario no modificado', err.error.errors.message, 'warning');
+      //   }
+
+      //   return throwError(err);
+      // })
     );
   }
 
   actualizarImagen(img: File) {
+
+    if (this.usuario.google) {
+      swal.fire('Foto no actualizable para usuarios google', this.usuario.nombre, 'info');
+      return new Promise((x:any)=> Promise.resolve(x));
+    }
 
     return this._subirArchivo.subirArchivo(this.token, 'usuarios', this.usuario._id, img).then((resp: any) => {
       this.usuario.img = resp.usuario.img;

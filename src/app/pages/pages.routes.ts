@@ -11,6 +11,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { ProfileComponent } from './profile/profile.component';
 
 import { SidebarService, LoginGuard } from '../services'
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { HospitalesComponent } from './hospitales/hospitales.component';
+import { MedicosComponent } from './medicos/medicos.component';
 
 const pageRoutes: Routes = [
   {
@@ -18,13 +21,18 @@ const pageRoutes: Routes = [
     component: PagesComponent,
     canActivate: [ LoginGuard ], 
     children: [
-      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'TABLERO' } },
-      { path: 'graficas1', component: Graficas1Component, data: { titulo: 'GRAFICAS' } },
-      { path: 'progress', component: ProgressComponent,data: { titulo: 'PROGRESO' } },
-      { path: 'promesas', component: PromesasComponent, data: { titulo: 'PROMESAS' } },
-      { path: 'rxjs', component: RxjsComponent, data: { titulo: 'OBSERVABLES' }},
-      { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'CONFGURACION' } },
-      { path: 'perfil', component: ProfileComponent, data: { titulo: 'PERFIL' } },
+      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Tablero' } },
+      { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
+      { path: 'progress', component: ProgressComponent,data: { titulo: 'Progreso' } },
+      { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
+      { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Observables' }},
+      { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Configuración' } },
+      { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil' } },
+      // Mantenimientos
+      { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
+      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantinimiento de Hospitales' } },
+      { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimientos de Médicos' } },
+
 
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]

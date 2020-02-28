@@ -1,0 +1,28 @@
+<div class="fondo-negro" [ngClass]="{'oculto': modalUploadService.oculto }">
+    <div class="modal" style="display:block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Carga de imágenes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <img *ngIf="this.modalUploadService.previewImg" [src]="modalUploadService.previewImg" class="img-responsive">
+                    <img *ngIf="!this.modalUploadService.previewImg" [src]="modalUploadService.img | imagen " alt="user" class="img-responsive">
+                    <br>
+                    <!-- type file is unsuported as ngModel, take the content only is possible with the event -->
+                    <input #img type="file" class="form-control" id="img" placeholder="Seleccione una imagen" name="img" accept=".gif,.jpg,.jpeg,.png" (change)="previsualizarImagen( $event )">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cerrarModal()">Close</button>
+                    <button [disabled]="!modalUploadService.previewImg" type="button" class="btn btn-primary" (click)="subeImg()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

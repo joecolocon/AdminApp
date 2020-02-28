@@ -4,3 +4,4 @@ export * from './sidebar.service';
 export * from './usuario.service';
 export * from './guards/login.guard';
 export * from './subir-archivo.service';
+export * from './modal-upload.service';

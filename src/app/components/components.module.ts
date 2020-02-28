@@ -5,7 +5,9 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule } from 'ng2-charts';
 
-import { IncrementadorComponent, GraficoDonaComponent } from './';
+import { IncrementadorComponent, GraficoDonaComponent, ModalUploadComponent } from './';
+
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -13,15 +15,18 @@ import { IncrementadorComponent, GraficoDonaComponent } from './';
         CommonModule,
         FormsModule,
         BrowserModule,
-        ChartsModule
+        ChartsModule,
+        PipesModule
     ],
     exports: [
         IncrementadorComponent,
-        GraficoDonaComponent
+        GraficoDonaComponent,
+        ModalUploadComponent
     ],
     declarations: [
         IncrementadorComponent,
-        GraficoDonaComponent
+        GraficoDonaComponent,
+        ModalUploadComponent
     ],
     providers: []
 })
