@@ -14,6 +14,8 @@ import { SidebarService, LoginGuard } from '../services'
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
+import { MedicoComponent } from './medicos/medico.component';
+
 
 const pageRoutes: Routes = [
   {
@@ -30,10 +32,10 @@ const pageRoutes: Routes = [
       { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil' } },
       // Mantenimientos
       { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
-      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantinimiento de Hospitales' } },
+      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' } },
       { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimientos de Médicos' } },
-
-
+      { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Edición de Médico' } },
+      
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }

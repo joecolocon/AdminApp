@@ -12,6 +12,7 @@ import swal from 'sweetalert2';
 export class ModalUploadService {
 
   grupo: string;
+  tipo: string;
   id: string;
   img: string;
   oculto: boolean = true;
@@ -27,6 +28,12 @@ export class ModalUploadService {
     this.img = img;
     this.previewImg = null;
     this.oculto = false;
+    switch (grupo) {
+      case 'usuarios': this.tipo="usuario"; break;
+      case 'hospitales': this.tipo="hospital"; break;
+      case 'medicos': this.tipo='medico'; break;
+      default: this.tipo='usuario'; break;
+    }
   }
 
   ocultarModal() {

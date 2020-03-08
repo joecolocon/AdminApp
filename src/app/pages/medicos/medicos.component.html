@@ -1,1 +1,50 @@
-<p>medicos works!</p>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #input type="text" class="form-control" placeholder="Buscar médico ..." (keyup)="buscarMedicos( input.value )">
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="cargando" class="row">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <i class="fa fa-spin fa-refresh fa-2x"></i> Loading
+        </div>
+    </div>
+</div>
+<div *ngIf="!cargando" class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <button class="btn btn-primary rounded float-right" [routerLink]="['/medico','new']"><i class="fa fa-plus-square"></i> Crear Médico</button>
+                <br>
+                <h3 *ngIf="!termino" class="card-title">Médicos registrados (<small>{{ total }}</small>)</h3>
+                <h3 *ngIf="termino" class="card-title">Médicos encontrados (<small>{{ total }}</small>)</h3>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Hospital</th>
+                        <th></th>
+                    </tr>
+                    <tbody>
+                        <tr *ngFor="let medico of medicos">
+                            <td><img (click)="modificarImagen( medico )" [src]="medico.img | imagen:'medico'" class="img-circle img-50 pointer"></td>
+                            <td>{{ medico.nombre }}</td>
+                            <td>{{ medico.hospital.nombre }}</td>
+                            <td>
+                                <button [routerLink]="['/medico',medico._id]" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                                <button (click)="borrarMedico( medico )" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button *ngIf="!termino" (click)="cambiarDesde(-5)" class="btn btn-secondary float-lg-left"><i class="fa fa-arrow-left"></i> Anteriores</button> &nbsp;
+                <button *ngIf="!termino" (click)="cambiarDesde(5)" class="btn btn-secondary float-lg.right">Siguientes <i class="fa fa-arrow-right"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
