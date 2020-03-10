@@ -14,6 +14,7 @@ export class UsuarioService {
 
   usuario: Usuario;
   token: string;
+  menu: any = [];
 
   constructor(private client: HttpClient, private _subirArchivo: SubirArchivoService) {
     console.log("usuario service listo");
@@ -60,15 +61,15 @@ export class UsuarioService {
         swal.fire('Usuario creado', usuario.email, 'success');
         return resp.body;
       })
-      // ,
-      // catchError((err: any) => {
+      ,
+      catchError((err: any) => {
 
-      //   if (err.error && err.error.errors && err.error.message) {
-      //     swal.fire('Usuario no creado', err.error.errors.message, 'warning');
-      //   }
+        if (err.error && err.error.errors && err.error.message) {
+          swal.fire(err.error.message, err.error.errors.message, 'error');
+        }
 
-      //   return throwError(err);
-      // })
+        return throwError(err);
+      })
     );
   }
 
@@ -85,21 +86,21 @@ export class UsuarioService {
         if (resp && resp.ok) {
 
           if (this.usuario._id === resp.usuario._id) {
-            this.guardaStorage(this.token, resp.usuario);
+            this.guardaStorage(this.token, resp.usuario, resp.menu);
           }
 
           swal.fire('Usuario modificado', usuarioToEdit.nombre, 'success');
         }
       })
-      // ,
-      // catchError((err: any) => {
+      ,
+      catchError((err: any) => {
 
-      //   if (err.error && err.error.errors && err.error.message) {
-      //     swal.fire('Usuario no modificado', err.error.errors.message, 'warning');
-      //   }
+        if (err.error && err.error.errors && err.error.message) {
+          swal.fire(err.error.message, err.error.errors.message, 'error');
+        }
 
-      //   return throwError(err);
-      // })
+        return throwError(err);
+      })
     );
   }
 
@@ -112,7 +113,7 @@ export class UsuarioService {
 
     return this._subirArchivo.subirArchivo(this.token, 'usuarios', this.usuario._id, img).then((resp: any) => {
       this.usuario.img = resp.usuario.img;
-      this.guardaStorage(this.token, this.usuario);
+      this.guardaStorage(this.token, this.usuario, this.menu);
       swal.fire('Foto actualizada', this.usuario.nombre, 'success');
     }
     );
@@ -124,7 +125,7 @@ export class UsuarioService {
 
       map((resp: any) => {
         if (resp.ok) {
-          this.guardaStorage(resp.token, resp.body);
+          this.guardaStorage(resp.token, resp.body, resp.menu);
         }
 
         return resp;
@@ -145,10 +146,14 @@ export class UsuarioService {
     return this.client.post(environment.urlServicios + '/login', usuario).pipe(
       map((resp: any) => {
         if (resp.ok) {
-          this.guardaStorage(resp.token, resp.body);
+          this.guardaStorage(resp.token, resp.body, resp.menu);
         }
 
         return resp;
+      }),
+      catchError (error => {
+        swal.fire('Error en el login',error.error.message,'error');
+        return throwError(error);
       })
     );
 
@@ -161,17 +166,21 @@ export class UsuarioService {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
     localStorage.removeItem('usuario');
+    localStorage.removeItem('menu');
+    
   }
 
   private cargaStorage() {
     this.token = localStorage.getItem("token") ? localStorage.getItem("token") : null;
     this.usuario = localStorage.getItem("usuario") ? JSON.parse(localStorage.getItem("usuario")) : null;
+    this.menu = localStorage.getItem("menu") ? JSON.parse(localStorage.getItem("menu")) : null;
   }
 
-  private guardaStorage(token: string, usuario: Usuario) {
+  private guardaStorage(token: string, usuario: Usuario, menu:any) {
     localStorage.setItem("id", usuario._id);
     localStorage.setItem("token", token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('menu', JSON.stringify(menu));
     this.token = token;
     this.usuario = usuario;
   }

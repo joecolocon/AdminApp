@@ -5,5 +5,6 @@ export * from './usuario.service';
 export * from './hospital.service';
 export * from './medico.service';
 export * from './guards/login.guard';
+export * from './guards/admin.guard';
 export * from './subir-archivo.service';
 export * from './modal-upload.service';

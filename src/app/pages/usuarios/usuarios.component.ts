@@ -17,8 +17,8 @@ export class UsuariosComponent implements OnInit {
   cargando: boolean = false;
   termino: string;
 
-  constructor(private usuarioService: UsuarioService, private modalUploadService:ModalUploadService) {
-    this.usuarioLogado=this.usuarioService.usuario;
+  constructor(private usuarioService: UsuarioService, private modalUploadService: ModalUploadService) {
+    this.usuarioLogado = this.usuarioService.usuario;
     this.cargarUsuarios();
   }
 
@@ -29,9 +29,8 @@ export class UsuariosComponent implements OnInit {
       if (this.termino) {
         this.buscarUsuarios(this.termino);
       } else {
-       this.cambiarDesde(0);
+        this.cambiarDesde(0);
       }
-      
     });
   }
 
@@ -98,10 +97,10 @@ export class UsuariosComponent implements OnInit {
 
   modificarImagen(usuarioEdit: Usuario) {
     if (usuarioEdit.google) return;
-    this.modalUploadService.mostarModal('usuarios',usuarioEdit._id, usuarioEdit.img);
+    this.modalUploadService.mostarModal('usuarios', usuarioEdit._id, usuarioEdit.img);
   }
 
-  actualizarImagen(evento: any ) {
+  actualizarImagen(evento: any) {
     console.log("Evento recibido", evento);
   }
 
@@ -112,12 +111,13 @@ export class UsuariosComponent implements OnInit {
       return;
     }
 
-    swal.fire({ 
-      title: 'Esta seguro', 
-      text: 'Confirme que quiere borrar el registro', 
-      icon: 'warning', 
-      allowEscapeKey: true, 
-      showCancelButton: true }).then((x: any) => {
+    swal.fire({
+      title: 'Esta seguro',
+      text: 'Confirme que quiere borrar el registro',
+      icon: 'warning',
+      allowEscapeKey: true,
+      showCancelButton: true
+    }).then((x: any) => {
 
       if (!x.value || x.value !== true) return;
 
